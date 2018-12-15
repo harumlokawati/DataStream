@@ -18,7 +18,7 @@ import operator
 
 def frequent_word(str):
     dict = {}
-    str = str.split(' ','.')
+    str = str.split(' ')
     for word in str:
         if word not in ['a', 'the', 'this', 'that', 'but', 'also', 'of', 'for']:
             if word in dict:

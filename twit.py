@@ -1,6 +1,7 @@
 # Setup Twitter API using Twython
 
 from twython import Twython, TwythonStreamer
+import re
 
 APP_KEY = 'pVqijAxfbDRTWBadqEHs43Ozm'
 APP_SECRET = '5n0b7DDeCYCqeiHxk2vDNR6gurMcj3mEBAJQ6xIlStShY3R0DR'
@@ -18,14 +19,15 @@ import operator
 
 def frequent_word(str):
     dict = {}
-    str = str.split(' ')
+    str = re.split('; |, |\*|\n|\s',str)
+    
     for word in str:
-        if word not in ['a', 'the', 'this', 'that', 'but', 'also', 'of', 'for']:
+        if word.lower() not in ['a', 'the', 'this', 'that', 'but', 'also', 'of', 'for']:
             if word in dict:
-                cnt = dict[word] + 1
-                dict[word] = cnt
+                cnt = dict[word.lower()] + 1
+                dict[word.lower()] = cnt
             else:
-                dict[word] = 1
+                dict[word.lower()] = 1
             
     sorted_dict = sorted(dict.items(), key=operator.itemgetter(1), reverse=True)
     return sorted_dict

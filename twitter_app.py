@@ -23,12 +23,9 @@ def send_tweets_to_spark(http_resp, tcp_connection):
   for line in http_resp.iter_lines():
     try:
       full_tweet = json.loads(line)
-      tweet_text = json.dumps(full_tweet) + '\n'
-      # print(full_tweet)
-      # if(line['text']):
-      #   tcp_connection.send(full_tweet.encode('utf-8'))
-      # print(full_tweet)
-      # print(type(tweet_text))
+      # lsof -n -i4TCP:9009
+      tweet_text = full_tweet['user']['screen_name'] + "|||" + str(full_tweet['retweet_count']) + "|||" + str(full_tweet['favorite_count']) + '|||' + full_tweet['text']
+      tweet_text += '\n'
       print("Tweet Text: " + tweet_text)
       print ("------------------------------------------")
       tcp_connection.send(tweet_text.encode())
